@@ -37,6 +37,7 @@ namespace Spotivy_Nick_en_Niels
         {
             TotalPlays++;
             Console.WriteLine($"Playing {Name}");
+            Console.WriteLine(Text);
         }
         public void PauseSong() { }
         public void ShowInfo()
