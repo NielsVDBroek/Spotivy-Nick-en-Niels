@@ -2,7 +2,7 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Music MusicCollection = new Music();
 
@@ -13,7 +13,7 @@ namespace Spotivy_Nick_en_Niels
             foreach (Song song in MusicCollection.GetListOfMusic())
             {
                 Console.WriteLine(song);
-                song.PlaySong();
+                await song.PlaySong();
             }
 
         }

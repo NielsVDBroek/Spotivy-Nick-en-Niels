@@ -33,12 +33,21 @@ namespace Spotivy_Nick_en_Niels
 
 
 
-        public void PlaySong() 
+        public async Task PlaySong()
         {
             TotalPlays++;
             Console.WriteLine($"Playing {Name}");
-            Console.WriteLine(Text);
+            string[] words = Text.Split(' ');
+
+            // Iterate through each word
+            foreach (string word in words)
+            {
+                Console.Write(word + " ");
+                await Task.Delay(100);
+            }
+            Console.WriteLine();
         }
+
         public void PauseSong() { }
         public void ShowInfo()
         {
