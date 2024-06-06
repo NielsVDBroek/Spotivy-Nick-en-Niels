@@ -1,4 +1,4 @@
-﻿namespace Spotivy_Nick_en_Niels
+namespace Spotivy_Nick_en_Niels
 {
     internal class Program
     {
