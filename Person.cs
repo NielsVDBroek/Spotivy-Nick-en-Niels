@@ -8,7 +8,7 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Person
     {
-        private string Name { get; }
+        protected string Name { get; }
         private string Password { get; }
 
         public Person(string name, string password)
@@ -20,6 +20,11 @@ namespace Spotivy_Nick_en_Niels
         public void LogIn()
         {
 
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}";
         }
 
     }

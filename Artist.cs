@@ -16,5 +16,6 @@ namespace Spotivy_Nick_en_Niels
         public void RemoveSong() { }
         public void CreateAlbum() { }
         public void RemoveAlbum() { }
+
     }
 }

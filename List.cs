@@ -18,6 +18,11 @@ namespace Spotivy_Nick_en_Niels
             Owner = owner;
         }
 
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
+
         public void PlayList() { }
         public void SkipSong() { }
         public void AddToList() { }
