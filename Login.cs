@@ -124,8 +124,9 @@ namespace Spotivy_Nick_en_Niels
             // Function to retrieve the user based on user id
             public User GetUser(string userid)
             {
-                return users.Single(u => u.UserId == userid);
+                return users.SingleOrDefault(u => u.UserId == userid);
             }
+
         }
 
 
@@ -151,7 +152,7 @@ namespace Spotivy_Nick_en_Niels
             public static string SimulateUserCreation()
             {
                 Console.WriteLine("Let us first test the password hash creation i.e. User creation");
-                Console.WriteLine("Please enter user id");
+                Console.WriteLine("Please enter username");
                 string userid = Console.ReadLine() ?? string.Empty; // Handle null case for userid
 
                 Console.WriteLine("Please enter password");
@@ -179,26 +180,40 @@ namespace Spotivy_Nick_en_Niels
             {
                 Console.WriteLine("Now let us simulate the password comparison");
 
-                Console.WriteLine("Please enter user id");
-                string userid = Console.ReadLine() ?? string.Empty; // Handle null case for userid
+                bool isAuthenticated = false;
 
-                Console.WriteLine("Please enter password");
-                string password = Console.ReadLine() ?? string.Empty; // Handle null case for password
-
-                // Let us retrieve the values from the database
-                User user2 = userRepo.GetUser(userid);
-
-                bool result = pwdManager.IsPasswordMatch(password, user2.Salt, user2.PasswordHash);
-
-                if (result)
+                while (!isAuthenticated)
                 {
-                    Console.WriteLine("Password Matched");
-                }
-                else
-                {
-                    Console.WriteLine("Password not Matched");
+                    Console.WriteLine("Please enter username");
+                    string userid = Console.ReadLine() ?? string.Empty; // Handle null case for userid
+
+                    Console.WriteLine("Please enter password");
+                    string password = Console.ReadLine() ?? string.Empty; // Handle null case for password
+
+                    // Let us retrieve the values from the database
+                    User user2 = userRepo.GetUser(userid);
+
+                    if (user2 == null)
+                    {
+                        Console.WriteLine("User not found. Please try again.");
+                        continue; // Ask for username and password again
+                    }
+
+                    bool result = pwdManager.IsPasswordMatch(password, user2.Salt, user2.PasswordHash);
+
+                    if (result)
+                    {
+                        Console.WriteLine("Password Matched");
+                        isAuthenticated = true; // Exit the loop
+                    }
+                    else
+                    {
+                        Console.WriteLine("Password not Matched. Please try again.");
+                    }
                 }
             }
+
+
 
         }
 
