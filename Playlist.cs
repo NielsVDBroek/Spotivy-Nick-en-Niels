@@ -10,7 +10,11 @@ namespace Spotivy_Nick_en_Niels
     {
         public Playlist(string name, User owner) : base(name, owner) { }
 
-        public void AddSong() { }
+        public void AddSong(Song songToAdd) 
+        {
+            this.Songs.Add(songToAdd);
+        }
+
         public void RemoveSong() { }
         public void RenameList() { }
         public void RemoveList() { }

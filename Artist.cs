@@ -10,7 +10,10 @@ namespace Spotivy_Nick_en_Niels
     {
         public List<Song> Songs { get; }
         public List<Album> Albums { get; }
-        public Artist(string name, string password) : base(name, password) { }
+        public Artist(string name, string password) : base(name, password) 
+        {
+            
+        }
 
         public void CreateSong() { }
         public void RemoveSong() { }

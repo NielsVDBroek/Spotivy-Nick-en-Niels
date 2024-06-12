@@ -14,18 +14,30 @@ namespace Spotivy_Nick_en_Niels
 
         public List(string name, User owner) 
         {
-            Name = name;
-            Owner = owner;
+            this.Name = name;
+            this.Owner = owner;
+            this.Songs = new List<Song>();
         }
 
         public override string ToString()
         {
-            return $"{Name}";
+            return $"{this.Name}";
         }
 
-        public void PlayList() { }
+        public async Task PlayList() 
+        {
+            if (this.Songs.Count() == 0)
+            {
+                Console.WriteLine("No songs in this list!");
+            } else
+            {
+                foreach (Song song in this.Songs)
+                {
+                    Console.WriteLine(song);
+                    await song.PlaySong();
+                }
+            }
+        }
         public void SkipSong() { }
-        public void AddToList() { }
-
     }
 }

@@ -37,7 +37,7 @@ namespace Spotivy_Nick_en_Niels
 
         public void AddSong(Song song)
         {
-            music.Add(song);
+            this.music.Add(song);
         }
 
         public List<Song> GetListOfMusic()
@@ -52,12 +52,27 @@ namespace Spotivy_Nick_en_Niels
 
         public void AddArtist(Artist artist)
         {
-            artists.Add(artist);
+            this.artists.Add(artist);
         }
 
-        public List<Artist> GetListOfMusic()
+        public List<Artist> GetListOfArtists()
         {
             return artists;
+        }
+    }
+
+    internal class Users
+    {
+        private List<User> users = new List<User>();
+
+        public void AddUser(User user)
+        {
+            this.users.Add(user);
+        }
+
+        public List<User> GetListOfUsers()
+        {
+            return users;
         }
     }
 }
