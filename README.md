@@ -3,5 +3,6 @@
 
 Classes: UpperCamelCase
 
-Methods, variables: lowerCamelCase
+Methods, variables: UpperCamelCase
+
 
