@@ -17,26 +17,26 @@ namespace Spotivy_Nick_en_Niels
 
         public Song(string name, Artist artist, string text, Music musicLibrary) 
         {
-            Name = name;
-            Artist = artist;
-            Text = text;
-            Date = DateTime.Now;
-            TotalPlays = 0;
+            this.Name = name;
+            this.Artist = artist;
+            this.Text = text;
+            this.Date = DateTime.Now;
+            this.TotalPlays = 0;
 
             musicLibrary.AddSong(this);
         }
 
         public void SetAlbum(Album album)
         {
-            Album = album;
+            this.Album = album;
         }
 
 
 
         public async Task PlaySong()
         {
-            TotalPlays++;
-            Console.WriteLine($"Playing {Name}");
+            this.TotalPlays++;
+            Console.WriteLine($"Playing {this.Name}");
             string[] words = Text.Split(' ');
 
             // Iterate through each word
@@ -51,21 +51,21 @@ namespace Spotivy_Nick_en_Niels
         public void PauseSong() { }
         public void ShowInfo()
         {
-            Console.WriteLine($"Name: {Name}");
-            Console.WriteLine($"Artist: {Artist}");
-            if(Album != null)
+            Console.WriteLine($"Name: {this.Name}");
+            Console.WriteLine($"Artist: {this.Artist}");
+            if(this.Album != null)
             {
-                Console.WriteLine($"Text: {Album}");
+                Console.WriteLine($"Text: {this.Album}");
             }
-            Console.WriteLine($"Text: {Text}");
-            Console.WriteLine($"Date: {Date.ToString("dd/MM/yyyy")}");
-            Console.WriteLine($"TotalPlays: {TotalPlays}");
+            Console.WriteLine($"Text: {this.Text}");
+            Console.WriteLine($"Date: {this.Date.ToString("dd/MM/yyyy")}");
+            Console.WriteLine($"TotalPlays: {this.TotalPlays}");
         }
         public void AddToList() { }
 
         public override string ToString()
         {
-            return $"{Name}";
+            return $"{this.Name}";
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine(song);
                 await song.PlaySong();
             }
-
         }
     }
 }

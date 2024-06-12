@@ -13,8 +13,8 @@ namespace Spotivy_Nick_en_Niels
 
         public Person(string name, string password)
         {
-            Name = name;
-            Password = password;
+            this.Name = name;
+            this.Password = password;
         }
 
         public void LogIn()
@@ -24,7 +24,7 @@ namespace Spotivy_Nick_en_Niels
 
         public override string ToString()
         {
-            return $"{Name}";
+            return $"{this.Name}";
         }
 
     }
