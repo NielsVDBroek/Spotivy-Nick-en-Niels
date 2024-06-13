@@ -25,15 +25,6 @@ internal class Program
         }
 
         Music MusicCollection = new Music();
-        Data.AddStandardData(MusicCollection);
-
-        Console.WriteLine("Data toegevoegd!");
-        Console.WriteLine(DateTime.Now);
-        foreach (Song song in MusicCollection.GetListOfMusic())
-        {
-            Console.WriteLine(song);
-            await song.PlaySong();
-        }
 
         Console.ReadLine();
       
