@@ -8,7 +8,7 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Person
     {
-        protected string Name { get; }
+        public string Name { get; }
         private string Password { get; }
 
         public Person(string name, string password)
