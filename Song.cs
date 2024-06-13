@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Spotivy_Nick_en_Niels
@@ -15,13 +16,17 @@ namespace Spotivy_Nick_en_Niels
         private int TotalPlays { get; set; }
         public Album Album { get; private set; }
 
-        public Song(string name, Artist artist, string text, Music musicLibrary) 
+        private bool isPaused;
+        private ManualResetEventSlim pauseEvent;
+
+        public Song(string name, Artist artist, Music musicLibrary, string text) 
         {
             this.Name = name;
             this.Artist = artist;
             this.Text = text;
             this.Date = DateTime.Now;
             this.TotalPlays = 0;
+            this.pauseEvent = new ManualResetEventSlim(true);
 
             musicLibrary.AddSong(this);
         }
@@ -33,22 +38,43 @@ namespace Spotivy_Nick_en_Niels
 
 
 
-        public async Task PlaySong()
+        public async Task PlaySong(CancellationToken cancellationToken)
         {
             this.TotalPlays++;
             Console.WriteLine($"Playing {this.Name}");
             string[] words = Text.Split(' ');
 
-            // Iterate through each word
             foreach (string word in words)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+                pauseEvent.Wait();
+
                 Console.Write(word + " ");
                 await Task.Delay(100);
             }
             Console.WriteLine();
         }
 
-        public void PauseSong() { }
+        public void PauseSong() 
+        {
+            if (!isPaused)
+            {
+                pauseEvent.Reset();
+                isPaused = true;
+                Console.WriteLine("\r\nSong paused");
+            }
+        }
+
+        public void ResumeSong()
+        {
+            if (isPaused)
+            {
+                pauseEvent.Set();
+                isPaused = false;
+                Console.WriteLine("\r\nSong resumed\r\n");
+            }
+        }
+
         public void ShowInfo()
         {
             Console.WriteLine($"Name: {this.Name}");

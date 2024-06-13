@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Spotivy_Nick_en_Niels
 {
     internal class User : Person
     {
-        public string PasswordHash { get; private set; }
-        public string Salt { get; private set; }
-        public List<Playlist> Playlists { get; } = new List<Playlist>();
-        public List<User> Friends { get; } = new List<User>();
+    public string PasswordHash { get; private set; }
+    public string Salt { get; private set; }
+    public List<Playlist> Playlists { get; } = new List<Playlist>();
+    public List<User> Friends { get; } = new List<User>();
 
         public User(string name, string password) : base(name, password)
         {
