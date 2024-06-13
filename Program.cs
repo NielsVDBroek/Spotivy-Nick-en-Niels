@@ -23,12 +23,8 @@ internal class Program
             Console.WriteLine("Invalid choice. Exiting.");
             return;
         }
-
-        Music MusicCollection = new Music();
-
-        Console.ReadLine();
       
-      Data.AddStandardData();
+        Data.AddStandardData();
 
             var cts = new CancellationTokenSource();
 
