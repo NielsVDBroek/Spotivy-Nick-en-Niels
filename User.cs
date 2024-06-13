@@ -10,7 +10,10 @@ namespace Spotivy_Nick_en_Niels
     {
         public List<Playlist> Playlists { get; }
         public List<User> Friends { get; }
-        public User(string name, string password) : base(name, password) {}
+        public User(string name, string password, Users UsersLibrary) : base(name, password) 
+        {
+            UsersLibrary.AddUser(this);
+        }
 
         public void PlaySong() {}
         public void PauseSong() {}

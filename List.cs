@@ -34,7 +34,7 @@ namespace Spotivy_Nick_en_Niels
                 foreach (Song song in this.Songs)
                 {
                     Console.WriteLine(song);
-                    await song.PlaySong();
+                    //await song.PlaySong();
                 }
             }
         }

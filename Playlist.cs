@@ -15,8 +15,19 @@ namespace Spotivy_Nick_en_Niels
             this.Songs.Add(songToAdd);
         }
 
-        public void RemoveSong() { }
-        public void RenameList() { }
-        public void RemoveList() { }
+        public void RemoveSong(Song songToRemove) 
+        {
+            if (this.Songs.Contains(songToRemove))
+            {
+                this.Songs.Remove(songToRemove);
+            }
+            
+        }
+
+        public void RenameList() 
+        {
+            String newListName = Console.ReadLine();
+            this.Name = newListName;
+        }
     }
 }

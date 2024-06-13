@@ -4,16 +4,28 @@ namespace Spotivy_Nick_en_Niels
     {
         static async Task Main(string[] args)
         {
-            Music MusicCollection = new Music();
 
-            Data.AddStandardData(MusicCollection);
+            Data.AddStandardData();
+
+            var cts = new CancellationTokenSource();
 
             Console.WriteLine("Data toegevoegd!");
             Console.WriteLine(DateTime.Now);
-            foreach (Song song in MusicCollection.GetListOfMusic())
+
+            foreach (Artist artist in Data.GetArtists())
             {
-                Console.WriteLine(song);
-                await song.PlaySong();
+                Console.WriteLine(artist);
+            }
+
+            foreach (Song song in Data.GetSongs())
+            {
+                var playTask = song.PlaySong(cts.Token);
+
+                await Task.Delay(5000);
+                song.PauseSong();
+                await Task.Delay(5000);
+                song.ResumeSong();
+                await playTask;
             }
         }
     }
