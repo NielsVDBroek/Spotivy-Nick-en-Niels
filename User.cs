@@ -18,6 +18,8 @@ namespace Spotivy_Nick_en_Niels
             // Print the salt and hash
             Console.WriteLine($"Generated Salt for {name}: {Salt}");
             Console.WriteLine($"Generated Hash for {name}: {PasswordHash}");
+
+            Data.GetUsers().Add( this );
         }
 
         public void PlaySong() { }
