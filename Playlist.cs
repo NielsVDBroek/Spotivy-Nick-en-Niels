@@ -8,7 +8,10 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Playlist : List
     {
-        public Playlist(string name, User owner) : base(name, owner) { }
+        public Playlist(string name, User owner) : base(name, owner) 
+        {
+            owner.Playlists.Add(this);
+        }
 
         public void AddSong(Song songToAdd) 
         {

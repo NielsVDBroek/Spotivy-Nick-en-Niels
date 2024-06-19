@@ -22,19 +22,48 @@ namespace Spotivy_Nick_en_Niels
             Data.GetUsers().Add( this );
         }
 
-        public void PlaySong() { }
-        public void PauseSong() { }
-        public void SkipSong() { }
-        public void CreatePlaylist() { }
+        public void PlaySong(Song song) 
+        {
+            song.PlaySong();
+        }
+        public void PauseSong(Song song) 
+        {
+            song.PauseSong();
+        }
+        public void ResumeSong(Song song) 
+        {
+            song.ResumeSong();
+        }
+        public void SkipSong()
+        {
+            
+        }
+        public void CreatePlaylist(string playlistName) 
+        {
+            new Playlist(playlistName, this);
+        }
         public void RemovePlaylist() { }
-        public void ShowPlaylists() { }
-        public void ShowSongs() { }
+
+        public List<Playlist> ShowPlaylists()
+        {
+            return Playlists;
+        }
+        public void ShowSongs() 
+        {
+            foreach (Song song in Data.GetSongs())
+            {
+                Console.WriteLine(song);
+            }
+        }
         public void ShowAlbums() { }
         public void ShowArtists() { }
         public void ShowFriendslist() { }
         public void AddFriend() { }
         public void RemoveFriend() { }
         public void ShowFriend() { }
-        public void CopyPlaylist() { }
+        public void CopyPlaylist( Playlist playlistToCopy) 
+        {
+            Playlists.Add(playlistToCopy);
+        }
     }
 }

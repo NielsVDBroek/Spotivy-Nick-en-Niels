@@ -26,7 +26,6 @@ internal class Program
       
         Data.AddStandardData();
 
-        var cts = new CancellationTokenSource();
 
         Console.WriteLine("Data toegevoegd!");
         Console.WriteLine(DateTime.Now);
@@ -57,7 +56,7 @@ internal class Program
 
         foreach (Song song in Data.GetSongs())
             {
-                var playTask = song.PlaySong(cts.Token);
+                var playTask = song.PlaySong();
 
                 await Task.Delay(5000);
                 song.PauseSong();
