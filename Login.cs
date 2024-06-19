@@ -74,22 +74,10 @@ namespace Spotivy_Nick_en_Niels
             public bool IsPasswordMatch(string password, string salt, string hash)
             {
                 string finalString = password + salt;
+                Console.WriteLine($"wachtwoord compaired: {finalString}");
                 return hash == m_hashComputer.GetPasswordHashAndSalt(finalString);
-            }
-        }
+                
 
-        public class MockUserRepository
-        {
-            private List<User> users = new List<User>();
-
-            public void AddUser(User user)
-            {
-                users.Add(user);
-            }
-
-            public User GetUser(string userid)
-            {
-                return users.SingleOrDefault(u => u.Name == userid);
             }
         }
     }

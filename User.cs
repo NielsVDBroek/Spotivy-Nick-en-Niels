@@ -14,11 +14,7 @@ namespace Spotivy_Nick_en_Niels
         {
             Salt = Login.SaltGenerator.GetSaltString();
             PasswordHash = new Login.PasswordManager().GeneratePasswordHash(password, out string generatedSalt);
-
-            // Print the salt and hash
-            Console.WriteLine($"Generated Salt for {name}: {Salt}");
-            Console.WriteLine($"Generated Hash for {name}: {PasswordHash}");
-
+            Console.WriteLine($"User {name} created with salt {Salt} and password hash {PasswordHash}");
             Data.GetUsers().Add( this );
         }
 
