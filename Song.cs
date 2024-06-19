@@ -19,7 +19,7 @@ namespace Spotivy_Nick_en_Niels
         private bool isPaused;
         private ManualResetEventSlim pauseEvent;
 
-        public Song(string name, Artist artist, Music musicLibrary, string text) 
+        public Song(string name, Artist artist, string text) 
         {
             this.Name = name;
             this.Artist = artist;
@@ -28,7 +28,7 @@ namespace Spotivy_Nick_en_Niels
             this.TotalPlays = 0;
             this.pauseEvent = new ManualResetEventSlim(true);
 
-            musicLibrary.AddSong(this);
+            Data.GetSongs().Add(this);
         }
 
         public void SetAlbum(Album album)

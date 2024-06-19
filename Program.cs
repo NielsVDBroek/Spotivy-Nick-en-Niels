@@ -26,17 +26,36 @@ internal class Program
       
         Data.AddStandardData();
 
-            var cts = new CancellationTokenSource();
+        var cts = new CancellationTokenSource();
 
-            Console.WriteLine("Data toegevoegd!");
-            Console.WriteLine(DateTime.Now);
+        Console.WriteLine("Data toegevoegd!");
+        Console.WriteLine(DateTime.Now);
 
-            foreach (Artist artist in Data.GetArtists())
-            {
-                Console.WriteLine(artist);
-            }
+        Console.WriteLine();
+        Console.WriteLine("All artists:");
+        foreach (Artist artist in Data.GetArtists())
+        {
+            Console.WriteLine(artist);
+        }
+        Console.WriteLine();
 
-            foreach (Song song in Data.GetSongs())
+        Console.WriteLine();
+        Console.WriteLine("All songs:");
+        foreach (Song song in Data.GetSongs())
+        {
+            Console.WriteLine(song);
+        }
+        Console.WriteLine();
+
+        Console.WriteLine();
+        Console.WriteLine("All users:");
+        foreach (User user in Data.GetUsers())
+        {
+            Console.WriteLine(user);
+        }
+        Console.WriteLine();
+
+        foreach (Song song in Data.GetSongs())
             {
                 var playTask = song.PlaySong(cts.Token);
 
