@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -25,7 +23,6 @@ namespace Spotivy_Nick_en_Niels
                 return Convert.FromBase64String(base64Str);
             }
         }
-
 
         public static class SaltGenerator
         {
@@ -58,8 +55,6 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
-
-
         public class PasswordManager
         {
             HashComputer m_hashComputer = new HashComputer();
@@ -74,10 +69,8 @@ namespace Spotivy_Nick_en_Niels
             public bool IsPasswordMatch(string password, string salt, string hash)
             {
                 string finalString = password + salt;
-                Console.WriteLine($"wachtwoord compaired: {finalString}");
+                Console.WriteLine($"Comparing hash of entered password: {finalString}");
                 return hash == m_hashComputer.GetPasswordHashAndSalt(finalString);
-                
-
             }
         }
     }

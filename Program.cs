@@ -1,4 +1,5 @@
 using Spotivy_Nick_en_Niels;
+using static Spotivy_Nick_en_Niels.Login;
 
 internal class Program
 {
@@ -8,7 +9,7 @@ internal class Program
     static async Task Main(string[] args)
     {
         bool loggedIn = false;
-        while (loggedIn == false)
+        while (!loggedIn)
         {
             Console.WriteLine("Do you want to login?(L), sign up?(S), or logout?(O)");
             string userChoice = Console.ReadLine() ?? string.Empty;
@@ -21,7 +22,6 @@ internal class Program
             {
                 SimulateLogin();
                 loggedIn = true;
-
             }
             else if (userChoice.Equals("O", StringComparison.OrdinalIgnoreCase))
             {
@@ -38,7 +38,7 @@ internal class Program
 
                 var cts = new CancellationTokenSource();
 
-                Console.WriteLine("Data toegevoegd!");
+                Console.WriteLine("Data added!");
                 Console.WriteLine(DateTime.Now);
 
                 Console.WriteLine();
@@ -92,6 +92,8 @@ internal class Program
 
         // Print the salt and hash
         Console.WriteLine("User created successfully!");
+        Console.WriteLine($"Salt: {user.Salt}");
+        Console.WriteLine($"Password Hash: {user.PasswordHash}");
         Console.WriteLine();
     }
 
@@ -110,7 +112,6 @@ internal class Program
             string password = Console.ReadLine() ?? string.Empty;
 
             User user = Data.GetUsers().FirstOrDefault(u => u.Name.Equals(username, StringComparison.OrdinalIgnoreCase));
-
             if (user == null)
             {
                 Console.WriteLine("User not found. Please try again.");
@@ -121,7 +122,7 @@ internal class Program
             Console.WriteLine($"Entered Password: {password}");
             Console.WriteLine($"Stored Password Hash: {user.PasswordHash}");
             Console.WriteLine($"Stored Salt: {user.Salt}");
-            //Hier moet het ingevulde wachtwoord gehasht worden en vergeleken worden met de hash in de database
+
             bool result = pwdManager.IsPasswordMatch(password, user.Salt, user.PasswordHash);
             Console.WriteLine($"Password Match: {result}");
 
@@ -137,7 +138,6 @@ internal class Program
             }
         }
     }
-
 
     public static void SimulateLogout()
     {
