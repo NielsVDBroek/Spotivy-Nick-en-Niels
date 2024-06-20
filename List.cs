@@ -35,6 +35,7 @@ namespace Spotivy_Nick_en_Niels
                 {
                     Console.WriteLine(song);
                     song.PlaySong();
+                    await Task.Delay(2000);
                 }
             }
         }

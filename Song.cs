@@ -51,9 +51,10 @@ namespace Spotivy_Nick_en_Niels
                 pauseEvent.Wait();
 
                 Console.Write(word + " ");
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
             Console.WriteLine();
+
         }
 
         public void PauseSong() 
