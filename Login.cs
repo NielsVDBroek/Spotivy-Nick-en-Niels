@@ -75,6 +75,10 @@ namespace Spotivy_Nick_en_Niels
         static Login.PasswordManager pwdManager = new Login.PasswordManager();
         static User currentUser = null;
 
+        public static User GetCurrentUser()
+        {
+            return currentUser;
+        }
         public static void AskUserLogin()
         {
             bool loggedIn = false;
@@ -118,7 +122,7 @@ namespace Spotivy_Nick_en_Niels
 
         public static void UserLogin()
         {
-            Console.WriteLine("Now let us simulate the password comparison");
+            Console.WriteLine("");
 
             bool isAuthenticated = false;
 
@@ -134,12 +138,13 @@ namespace Spotivy_Nick_en_Niels
                 if (user == null)
                 {
                     Console.WriteLine("User not found. Please try again.");
-                    continue;
+                    AskUserLogin();
+                    break;
                 }
 
 
                 bool result = pwdManager.IsPasswordMatch(password, user.Salt, user.PasswordHash);
-
+                 
                 if (result)
                 {
                     Console.WriteLine("Password Matched");
@@ -149,6 +154,8 @@ namespace Spotivy_Nick_en_Niels
                 else
                 {
                     Console.WriteLine("Password not Matched. Please try again.");
+                    AskUserLogin();
+                    break;
                 }
             }
         }
