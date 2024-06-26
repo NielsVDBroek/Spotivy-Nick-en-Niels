@@ -146,5 +146,21 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        public static void ShowHelp()
+        {
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("Spacebar - Pause/Resume the song");
+            Console.WriteLine("A - Add a friend");
+            Console.WriteLine("F - Show friends list");
+            Console.WriteLine("H - Show help");
+            Console.WriteLine("O - Logout");
+            Console.WriteLine("R - Remove a friend");
+            Console.WriteLine("U - Show current logged-in user");
+            Console.WriteLine("V - Accept friend request");
+            Console.WriteLine("P - Show pending friend requests");
+            Console.WriteLine("D - Delete/cancel friend request");
+            Console.WriteLine("N - Deny incoming friend request");
+        }
+
     }
 }
