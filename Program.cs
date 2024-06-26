@@ -16,7 +16,7 @@ internal class Program
 
         while (true)
         {
-            Console.WriteLine("Enter your command (e.g., 'Play houdini'):");
+            Console.WriteLine("Enter your command (or type 'H' for a list of commands):");
             string input = Console.ReadLine().ToLower();
 
             if (!string.IsNullOrEmpty(input))

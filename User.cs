@@ -26,19 +26,22 @@ namespace Spotivy_Nick_en_Niels
         }
         public void RemovePlaylist() { }
 
-        public List<Playlist> ShowPlaylists()
+        public void ShowPlaylists()
         {
-            return Playlists;
-        }
-        public void ShowSongs() 
-        {
-            foreach (Song song in Data.GetSongs())
+            if (Playlists.Count > 0)
             {
-                Console.WriteLine(song);
+                Console.WriteLine($"{Name}'s playlists:");
+                foreach (Playlist playlist in Playlists)
+                {
+                    Console.WriteLine(playlist);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No playlists available.");
             }
         }
-        public void ShowAlbums() { }
-        public void ShowArtists() { }
+
         public void SendFriendRequest()
         {
             Console.WriteLine("Enter the name of the friend you want to add:");

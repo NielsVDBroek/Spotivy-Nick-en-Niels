@@ -33,7 +33,13 @@ namespace Spotivy_Nick_en_Niels
                             GetSongInfo(parameter);
                             break;
                         case "create":
-                            // create playlist
+                            if (parameter.Equals("playlist"))
+                            {
+                                Console.WriteLine("Enter name for your new playlist:");
+                                string playlistName = Console.ReadLine().ToLower();
+                                Login.GetCurrentUser().CreatePlaylist(playlistName);
+
+                            }
                             break;
                         default:
                             Console.WriteLine($"Unknown command: {command}");
@@ -60,32 +66,49 @@ namespace Spotivy_Nick_en_Niels
             switch (AskShowOption())
             {
                 case "songs":
-                    Console.WriteLine("All songs:");
-                    foreach (Song song in Data.GetSongs())
+                    if (Data.GetSongs().Count > 0)
                     {
-                        Console.WriteLine(song);
+                        Console.WriteLine("All songs:");
+                        foreach (Song song in Data.GetSongs())
+                        {
+                            Console.WriteLine(song);
+                        }
                     }
-                    Console.WriteLine();
+                    else
+                    {
+                        Console.WriteLine("No songs available.");
+                    }
                     break;
                 case "users":
-                    Console.WriteLine("All users:");
-                    foreach (User user in Data.GetUsers())
+                    if (Data.GetSongs().Count > 0)
                     {
-                        Console.WriteLine(user);
+                        Console.WriteLine("All users:");
+                        foreach (User user in Data.GetUsers())
+                        {
+                            Console.WriteLine(user);
+                        }
                     }
-                    Console.WriteLine();
+                    else
+                    {
+                        Console.WriteLine("No users available.");
+                    }
                     break;
                 case "artists":
-                    Console.WriteLine("All artists:");
-                    foreach (Artist artist in Data.GetArtists())
+                    if (Data.GetSongs().Count > 0)
                     {
-                        Console.WriteLine(artist);
+                        Console.WriteLine("All artists:");
+                        foreach (Artist artist in Data.GetArtists())
+                        {
+                            Console.WriteLine(artist);
+                        }
                     }
-                    Console.WriteLine();
+                    else
+                    {
+                        Console.WriteLine("No artists available.");
+                    }
                     break;
                 case "playlists":
-                    Console.WriteLine("My playlists:");
-                    //current user playlists
+                    Login.GetCurrentUser().ShowPlaylists();
                     break;
                 case "albums":
                     Console.WriteLine("All albums:");
@@ -149,10 +172,10 @@ namespace Spotivy_Nick_en_Niels
         public static void ShowHelp()
         {
             Console.WriteLine("Available commands:");
-            Console.WriteLine("Spacebar - Pause/Resume the song");
+            Console.WriteLine("H - Show help");
+            Console.WriteLine("Spacebar - Pause/Resume the song(if a song is playing)");
             Console.WriteLine("A - Add a friend");
             Console.WriteLine("F - Show friends list");
-            Console.WriteLine("H - Show help");
             Console.WriteLine("O - Logout");
             Console.WriteLine("R - Remove a friend");
             Console.WriteLine("U - Show current logged-in user");
