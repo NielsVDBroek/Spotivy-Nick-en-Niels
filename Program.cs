@@ -7,43 +7,26 @@ internal class Program
 {
     static async Task Main(string[] args)
     {
-        AskUserLogin();
-
         Data.AddStandardData();
+        AskUserLogin();
 
         Console.WriteLine("Data added!");
         Console.WriteLine(DateTime.Now);
 
-        Console.WriteLine();
-        Console.WriteLine("All artists:");
-        foreach (Artist artist in Data.GetArtists())
-        {
-            Console.WriteLine(artist);
-        }
-        Console.WriteLine();
 
-        Console.WriteLine();
-        Console.WriteLine("All songs:");
-        foreach (Song song in Data.GetSongs())
+        while (true)
         {
-            Console.WriteLine(song);
-        }
-        Console.WriteLine();
+            Console.WriteLine("Enter your command (e.g., 'Play houdini'):");
+            string input = Console.ReadLine().ToLower();
 
-        Console.WriteLine();
-        Console.WriteLine("All users:");
-        foreach (User user in Data.GetUsers())
-        {
-            Console.WriteLine(user);
-        }
-        Console.WriteLine();
-
-        foreach (Song song in Data.GetSongs())
-        {
-            var playTask = song.PlaySong();
-
-            while (!playTask.IsCompleted)
+            if (!string.IsNullOrEmpty(input))
             {
+                await Client.ParseAndExecuteCommand(input);
+            }
+            else
+            {
+                Console.WriteLine("No command entered.");
+            }
                 if (Console.KeyAvailable)
                 {
                     var userInput = Console.ReadKey(intercept: true);
@@ -183,10 +166,8 @@ internal class Program
                 }
                 await Task.Delay(100);
             }
-
-            await playTask;
-            await Task.Delay(3000);
         }
+
     }
 
     static void ShowHelp()

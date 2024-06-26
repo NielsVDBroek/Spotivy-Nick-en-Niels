@@ -9,7 +9,7 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Song
     {
-        private string Name { get; }
+        public string Name { get; }
         private Artist Artist { get; }
         private string Text { get; }
         public DateTime Date { get; private set; }
@@ -77,6 +77,12 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        public void EndSong()
+        {
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+        }
+
         public void ShowInfo()
         {
             Console.WriteLine($"Name: {this.Name}");
@@ -85,7 +91,6 @@ namespace Spotivy_Nick_en_Niels
             {
                 Console.WriteLine($"Text: {this.Album}");
             }
-            Console.WriteLine($"Text: {this.Text}");
             Console.WriteLine($"Date: {this.Date.ToString("dd/MM/yyyy")}");
             Console.WriteLine($"TotalPlays: {this.TotalPlays}");
         }

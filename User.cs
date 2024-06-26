@@ -20,22 +20,6 @@ namespace Spotivy_Nick_en_Niels
             Data.GetUsers().Add(this);
         }
 
-        public void PlaySong(Song song) 
-        {
-            song.PlaySong();
-        }
-        public void PauseSong(Song song) 
-        {
-            song.PauseSong();
-        }
-        public void ResumeSong(Song song) 
-        {
-            song.ResumeSong();
-        }
-        public void SkipSong()
-        {
-            
-        }
         public void CreatePlaylist(string playlistName) 
         {
             new Playlist(playlistName, this);

@@ -31,11 +31,9 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine("No songs in this list!");
             } else
             {
-                foreach (Song song in this.Songs)
+                foreach (Song song in Data.GetSongs())
                 {
-                    Console.WriteLine(song);
                     song.PlaySong();
-                    await Task.Delay(2000);
                 }
             }
         }
