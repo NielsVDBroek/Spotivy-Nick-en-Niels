@@ -56,6 +56,26 @@ internal class Program
                             song.ResumeSong();
                         }
                     }
+                    if (userInput.Key == ConsoleKey.L)
+                    {
+                        UserLogout();
+                    }
+                    if (userInput.Key == ConsoleKey.U)
+                    {
+                        foreach (User user in Data.GetUsers())
+                        {
+                            Console.WriteLine(user);
+                        }
+                        Console.WriteLine();
+                    }
+                    if (userInput.Key == ConsoleKey.A)
+                    {
+                        User.AddFriend();
+                    }
+                    if (userInput.Key == ConsoleKey.R)
+                    {
+                        User.RemoveFriend();
+                    }
                 }
                 await Task.Delay(100);
             }

@@ -69,7 +69,6 @@ namespace Spotivy_Nick_en_Niels
             public bool IsPasswordMatch(string password, string salt, string hash)
             {
                 string finalString = password + salt;
-                Console.WriteLine($"Comparing hash of entered password: {finalString}");
                 return hash == m_hashComputer.GetPasswordHashAndSalt(finalString);
             }
         }
@@ -86,25 +85,25 @@ namespace Spotivy_Nick_en_Niels
 
                 if (userChoice.Equals("S", StringComparison.OrdinalIgnoreCase))
                 {
-                    SimulateUserCreation();
+                    UserCreation();
                 }
                 else if (userChoice.Equals("L", StringComparison.OrdinalIgnoreCase))
                 {
-                    SimulateLogin();
+                    UserLogin();
                     loggedIn = true;
                 }
                 else if (userChoice.Equals("O", StringComparison.OrdinalIgnoreCase))
                 {
-                    SimulateLogout();
+                    UserLogout();
                 }
                 else
                 {
-                    Console.WriteLine("Invalid choice. Exiting.");
+                    Console.WriteLine("Invalid choice. Try L, S or O");
                 }
             }
         }
 
-        public static void SimulateUserCreation()
+        public static void UserCreation()
         {
             Console.WriteLine("Please enter username");
             string username = Console.ReadLine() ?? string.Empty;
@@ -114,16 +113,10 @@ namespace Spotivy_Nick_en_Niels
 
             // Create User object with username and password
             User user = new User(username, password);
-
-            // Print the salt and hash
-            Console.WriteLine("User created successfully!");
-            Console.WriteLine($"Salt: {user.Salt}");
-            Console.WriteLine($"Password Hash: {user.PasswordHash}");
-            Console.WriteLine();
         }
 
 
-        public static void SimulateLogin()
+        public static void UserLogin()
         {
             Console.WriteLine("Now let us simulate the password comparison");
 
@@ -144,13 +137,8 @@ namespace Spotivy_Nick_en_Niels
                     continue;
                 }
 
-                // Print the entered password and the stored password hash for comparison
-                Console.WriteLine($"Entered Password: {password}");
-                Console.WriteLine($"Stored Password Hash: {user.PasswordHash}");
-                Console.WriteLine($"Stored Salt: {user.Salt}");
 
                 bool result = pwdManager.IsPasswordMatch(password, user.Salt, user.PasswordHash);
-                Console.WriteLine($"Password Match: {result}");
 
                 if (result)
                 {
@@ -165,7 +153,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
-        public static void SimulateLogout()
+        public static void UserLogout()
         {
             if (currentUser == null)
             {
@@ -175,6 +163,9 @@ namespace Spotivy_Nick_en_Niels
             {
                 currentUser = null;
                 Console.WriteLine("User logged out successfully.");
+                Console.WriteLine("");
+                AskUserLogin();
+
             }
         }
 
