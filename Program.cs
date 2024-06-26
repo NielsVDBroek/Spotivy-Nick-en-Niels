@@ -1,3 +1,4 @@
+using System;
 using Spotivy_Nick_en_Niels;
 
 internal class Program
@@ -26,11 +27,6 @@ internal class Program
       
         Data.AddStandardData();
 
-        var cts = new CancellationTokenSource();
-
-        Console.WriteLine("Data toegevoegd!");
-        Console.WriteLine(DateTime.Now);
-
         Console.WriteLine();
         Console.WriteLine("All artists:");
         foreach (Artist artist in Data.GetArtists())
@@ -56,15 +52,30 @@ internal class Program
         Console.WriteLine();
 
         foreach (Song song in Data.GetSongs())
-            {
-                var playTask = song.PlaySong(cts.Token);
+        {
+            var playTask = song.PlaySong();
 
-                await Task.Delay(5000);
-                song.PauseSong();
-                await Task.Delay(5000);
-                song.ResumeSong();
-                await playTask;
+            while (!playTask.IsCompleted)
+            {
+                if (Console.KeyAvailable)
+                {
+                    var userInput = Console.ReadKey(intercept: true);
+                    if (userInput.Key == ConsoleKey.Spacebar)
+                    {
+                        song.PauseSong();
+                        userInput = Console.ReadKey(intercept: true);
+                        if (userInput.Key == ConsoleKey.Spacebar)
+                        {
+                            song.ResumeSong();
+                        }
+                    }
+                }
+                await Task.Delay(100);
             }
+
+            await playTask;
+            await Task.Delay(3000);
+        }
     }
 
     public static void SimulateUserCreation()
