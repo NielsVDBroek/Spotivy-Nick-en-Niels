@@ -11,25 +11,30 @@ internal class Program
     {
         bool loggedIn = false;
         while (!loggedIn)
-          
-        Console.WriteLine("Do you want to login?(L) or sign up?(S)");
-        string userChoice = Console.ReadLine() ?? string.Empty;
+        {
+            Console.WriteLine("Do you want to login?(L), sign up?(S), or logout?(O)");
+            string userChoice = Console.ReadLine() ?? string.Empty;
 
-        if (userChoice.Equals("S", StringComparison.OrdinalIgnoreCase))
-        {
-            SimulateUserCreation();
+            if (userChoice.Equals("S", StringComparison.OrdinalIgnoreCase))
+            {
+                SimulateUserCreation();
+            }
+            else if (userChoice.Equals("L", StringComparison.OrdinalIgnoreCase))
+            {
+                SimulateLogin();
+                loggedIn = true;
+            }
+            else if (userChoice.Equals("O", StringComparison.OrdinalIgnoreCase))
+            {
+                SimulateLogout();
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Exiting.");
+            }
         }
-        else if (userChoice.Equals("L", StringComparison.OrdinalIgnoreCase))
-        {
-            SimulateLogin();
-        }
-        else
-        {
-            Console.WriteLine("Invalid choice. Exiting.");
-            return;
-        }
-      
-        Data.AddStandardData();
+
+            Data.AddStandardData();
 
         Console.WriteLine("Data added!");
         Console.WriteLine(DateTime.Now);
