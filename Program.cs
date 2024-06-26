@@ -1,13 +1,17 @@
 using System;
 using Spotivy_Nick_en_Niels;
+using static Spotivy_Nick_en_Niels.Login;
 
 internal class Program
 {
-    static Login.MockUserRepository userRepo = new Login.MockUserRepository();
     static Login.PasswordManager pwdManager = new Login.PasswordManager();
+    static User currentUser = null;
 
     static async Task Main(string[] args)
     {
+        bool loggedIn = false;
+        while (!loggedIn)
+          
         Console.WriteLine("Do you want to login?(L) or sign up?(S)");
         string userChoice = Console.ReadLine() ?? string.Empty;
 
@@ -27,31 +31,34 @@ internal class Program
       
         Data.AddStandardData();
 
+        Console.WriteLine("Data added!");
+        Console.WriteLine(DateTime.Now);
+
         Console.WriteLine();
         Console.WriteLine("All artists:");
         foreach (Artist artist in Data.GetArtists())
         {
-            Console.WriteLine(artist);
+             Console.WriteLine(artist);
         }
-        Console.WriteLine();
+                Console.WriteLine();
 
-        Console.WriteLine();
-        Console.WriteLine("All songs:");
-        foreach (Song song in Data.GetSongs())
-        {
-            Console.WriteLine(song);
-        }
-        Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("All songs:");
+                foreach (Song song in Data.GetSongs())
+                {
+                    Console.WriteLine(song);
+                }
+                Console.WriteLine();
 
-        Console.WriteLine();
-        Console.WriteLine("All users:");
-        foreach (User user in Data.GetUsers())
-        {
-            Console.WriteLine(user);
-        }
-        Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("All users:");
+                foreach (User user in Data.GetUsers())
+                {
+                    Console.WriteLine(user);
+                }
+                Console.WriteLine();
 
-        foreach (Song song in Data.GetSongs())
+                foreach (Song song in Data.GetSongs())
         {
             var playTask = song.PlaySong();
 
@@ -89,13 +96,11 @@ internal class Program
         // Create User object with username and password
         User user = new User(username, password);
 
-        // Add the user to the repository
-        userRepo.AddUser(user);
-
         // Print the salt and hash
         Console.WriteLine("User created successfully!");
-        Console.WriteLine($"Salt for {username}: {user.Salt}");
-        Console.WriteLine($"Password Hash for {username}: {user.PasswordHash}");
+        Console.WriteLine($"Salt: {user.Salt}");
+        Console.WriteLine($"Password Hash: {user.PasswordHash}");
+        Console.WriteLine();
     }
 
     public static void SimulateLogin()
@@ -112,25 +117,44 @@ internal class Program
             Console.WriteLine("Please enter password");
             string password = Console.ReadLine() ?? string.Empty;
 
-            User user = userRepo.GetUser(username);
-
+            User user = Data.GetUsers().FirstOrDefault(u => u.Name.Equals(username, StringComparison.OrdinalIgnoreCase));
             if (user == null)
             {
                 Console.WriteLine("User not found. Please try again.");
                 continue;
             }
 
+            // Print the entered password and the stored password hash for comparison
+            Console.WriteLine($"Entered Password: {password}");
+            Console.WriteLine($"Stored Password Hash: {user.PasswordHash}");
+            Console.WriteLine($"Stored Salt: {user.Salt}");
+
             bool result = pwdManager.IsPasswordMatch(password, user.Salt, user.PasswordHash);
+            Console.WriteLine($"Password Match: {result}");
 
             if (result)
             {
                 Console.WriteLine("Password Matched");
+                currentUser = user;
                 isAuthenticated = true;
             }
             else
             {
                 Console.WriteLine("Password not Matched. Please try again.");
             }
+        }
+    }
+
+    public static void SimulateLogout()
+    {
+        if (currentUser == null)
+        {
+            Console.WriteLine("No user is currently logged in.");
+        }
+        else
+        {
+            currentUser = null;
+            Console.WriteLine("User logged out successfully.");
         }
     }
 }
