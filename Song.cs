@@ -18,6 +18,7 @@ namespace Spotivy_Nick_en_Niels
 
         private bool isPaused;
         private ManualResetEventSlim pauseEvent;
+        private static CancellationTokenSource cts = new CancellationTokenSource();
 
         public Song(string name, Artist artist, string text) 
         {
@@ -38,7 +39,7 @@ namespace Spotivy_Nick_en_Niels
 
 
 
-        public async Task PlaySong(CancellationToken cancellationToken)
+        public async Task PlaySong()
         {
             this.TotalPlays++;
             Console.WriteLine($"Playing {this.Name}");
@@ -46,13 +47,14 @@ namespace Spotivy_Nick_en_Niels
 
             foreach (string word in words)
             {
-                cancellationToken.ThrowIfCancellationRequested();
+                cts.Token.ThrowIfCancellationRequested();
                 pauseEvent.Wait();
 
                 Console.Write(word + " ");
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
             Console.WriteLine();
+
         }
 
         public void PauseSong() 

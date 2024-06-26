@@ -1,3 +1,4 @@
+using System;
 using Spotivy_Nick_en_Niels;
 using static Spotivy_Nick_en_Niels.Login;
 
@@ -10,43 +11,35 @@ internal class Program
     {
         bool loggedIn = false;
         while (!loggedIn)
+          
+        Console.WriteLine("Do you want to login?(L) or sign up?(S)");
+        string userChoice = Console.ReadLine() ?? string.Empty;
+
+        if (userChoice.Equals("S", StringComparison.OrdinalIgnoreCase))
         {
-            Console.WriteLine("Do you want to login?(L), sign up?(S), or logout?(O)");
-            string userChoice = Console.ReadLine() ?? string.Empty;
+            SimulateUserCreation();
+        }
+        else if (userChoice.Equals("L", StringComparison.OrdinalIgnoreCase))
+        {
+            SimulateLogin();
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice. Exiting.");
+            return;
+        }
+      
+        Data.AddStandardData();
 
-            if (userChoice.Equals("S", StringComparison.OrdinalIgnoreCase))
-            {
-                SimulateUserCreation();
-            }
-            else if (userChoice.Equals("L", StringComparison.OrdinalIgnoreCase))
-            {
-                SimulateLogin();
-                loggedIn = true;
-            }
-            else if (userChoice.Equals("O", StringComparison.OrdinalIgnoreCase))
-            {
-                SimulateLogout();
-            }
-            else
-            {
-                Console.WriteLine("Invalid choice. Exiting.");
-            }
+        Console.WriteLine("Data added!");
+        Console.WriteLine(DateTime.Now);
 
-            if (currentUser != null)
-            {
-                Data.AddStandardData();
-
-                var cts = new CancellationTokenSource();
-
-                Console.WriteLine("Data added!");
-                Console.WriteLine(DateTime.Now);
-
-                Console.WriteLine();
-                Console.WriteLine("All artists:");
-                foreach (Artist artist in Data.GetArtists())
-                {
-                    Console.WriteLine(artist);
-                }
+        Console.WriteLine();
+        Console.WriteLine("All artists:");
+        foreach (Artist artist in Data.GetArtists())
+        {
+             Console.WriteLine(artist);
+        }
                 Console.WriteLine();
 
                 Console.WriteLine();
@@ -66,16 +59,29 @@ internal class Program
                 Console.WriteLine();
 
                 foreach (Song song in Data.GetSongs())
-                {
-                    var playTask = song.PlaySong(cts.Token);
+        {
+            var playTask = song.PlaySong();
 
-                    await Task.Delay(5000);
-                    song.PauseSong();
-                    await Task.Delay(5000);
-                    song.ResumeSong();
-                    await playTask;
+            while (!playTask.IsCompleted)
+            {
+                if (Console.KeyAvailable)
+                {
+                    var userInput = Console.ReadKey(intercept: true);
+                    if (userInput.Key == ConsoleKey.Spacebar)
+                    {
+                        song.PauseSong();
+                        userInput = Console.ReadKey(intercept: true);
+                        if (userInput.Key == ConsoleKey.Spacebar)
+                        {
+                            song.ResumeSong();
+                        }
+                    }
                 }
+                await Task.Delay(100);
             }
+
+            await playTask;
+            await Task.Delay(3000);
         }
     }
 

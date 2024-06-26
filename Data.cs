@@ -18,8 +18,6 @@ namespace Spotivy_Nick_en_Niels
 
         public static void AddStandardData()
         {
-            var cts = new CancellationTokenSource();
-
             Artist Artist1 = new Artist("Eminem", "Artist1Password");
             Artist Artist2 = new Artist("Imagine Dragons", "Artist2Password");
             Artist Artist3 = new Artist("Bruno Mars", "Artist3Password");
