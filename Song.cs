@@ -9,7 +9,7 @@ namespace Spotivy_Nick_en_Niels
 {
     internal class Song
     {
-        private string Name { get; }
+        public string Name { get; }
         private Artist Artist { get; }
         private string Text { get; }
         public DateTime Date { get; private set; }
