@@ -19,16 +19,25 @@ namespace Spotivy_Nick_en_Niels
             this.Salt = salt;
             Data.GetUsers().Add(this);
         }
-
+        //Gebruiker een playlist laten aanmaken.
         public void CreatePlaylist(string playlistName) 
         {
             new Playlist(playlistName, this);
         }
-        public void RemovePlaylist() 
+
+        //Verwijder playlist.
+        public void RemovePlaylist(string input) 
         {
-            
+            Playlist playlistToDelete = Playlists.Find(playlist => playlist.Name == input);
+            if (Playlists.Contains(playlistToDelete)){
+                Playlists.Remove(playlistToDelete);
+            } else
+            {
+                Console.WriteLine("Playlist not found.");
+            }
         }
 
+        //Alle playlists tonen van gebruiker.
         public void ShowPlaylists()
         {
             if (Playlists.Count > 0)
@@ -45,6 +54,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Vriendschapsverzoek versturen
         public void SendFriendRequest()
         {
             Console.WriteLine("Enter the name of the friend you want to add:");
@@ -68,6 +78,8 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine("User not found.");
             }
         }
+
+        //Vriendschapsverzoek accepteren
         public void AcceptFriendRequest()
         {
             if (PendingFriendRequests.Count == 0)
@@ -96,6 +108,8 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine("Invalid choice.");
             }
         }
+
+        //Vriendschapsverzoeken tonen
         public void ShowPendingFriendRequests()
         {
             if (PendingFriendRequests.Count == 0)
@@ -110,6 +124,8 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine(request.Name);
             }
         }
+
+        //Vriendschapsverzoek verwijderen 
         public void DeleteFriendRequest(User friend)
         {
             if (SentFriendRequests.Contains(friend))
@@ -124,6 +140,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Vriendschapsverzoek afwijzen
         public void DenyFriendRequest(User friend)
         {
             if (PendingFriendRequests.Contains(friend))
@@ -138,6 +155,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Vriend toevoegen
         public void AddFriend()
         {
             while (true)
@@ -167,6 +185,8 @@ namespace Spotivy_Nick_en_Niels
                 }
             }
         }
+
+        //Vriend verwijderen
         public void RemoveFriend()
         {
             while (true)
@@ -190,6 +210,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Vrienden tonen
         public void ShowFriendsList()
         {
             if (this.Friends.Count == 0)
@@ -204,10 +225,6 @@ namespace Spotivy_Nick_en_Niels
                     Console.WriteLine(friend.Name);
                 }
             }
-        }
-        public void CopyPlaylist( Playlist playlistToCopy) 
-        {
-            Playlists.Add(playlistToCopy);
         }
 
     }

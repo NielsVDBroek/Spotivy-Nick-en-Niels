@@ -16,6 +16,7 @@ namespace Spotivy_Nick_en_Niels
         private int TotalPlays { get; set; }
         public Album Album { get; private set; }
 
+        //Voor het pauzeren en hervatten van een nummer.
         private bool isPaused;
         private ManualResetEventSlim pauseEvent;
         private static CancellationTokenSource cts = new CancellationTokenSource();
@@ -28,9 +29,7 @@ namespace Spotivy_Nick_en_Niels
             this.Date = DateTime.Now;
             this.TotalPlays = 0;
             this.pauseEvent = new ManualResetEventSlim(true);
-            //add song to artists list.
             Data.GetSongs().Add(this);
-            //this.Artist.Songs.Add(this);
         }
 
         public void SetAlbum(Album album)
@@ -40,6 +39,7 @@ namespace Spotivy_Nick_en_Niels
 
 
 
+        //Tekst van het nummer opsplitsen in woorden. deze woorden worden om de 100ms getoond.
         public async Task PlaySong()
         {
             this.TotalPlays++;
@@ -52,12 +52,13 @@ namespace Spotivy_Nick_en_Niels
                 pauseEvent.Wait();
 
                 Console.Write(word + " ");
-                await Task.Delay(50);
+                await Task.Delay(100);
             }
             Console.WriteLine();
 
         }
 
+        //Nummer pauzeren.
         public void PauseSong() 
         {
             if (!isPaused)
@@ -68,6 +69,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Nummer hervatten.
         public void ResumeSong()
         {
             if (isPaused)
@@ -78,12 +80,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
-        public void EndSong()
-        {
-            cts.Cancel();
-            cts = new CancellationTokenSource();
-        }
-
+        //Toon de info van een nummer
         public void ShowInfo()
         {
             Console.WriteLine($"Name: {this.Name}");
@@ -95,7 +92,6 @@ namespace Spotivy_Nick_en_Niels
             Console.WriteLine($"Date: {this.Date.ToString("dd/MM/yyyy")}");
             Console.WriteLine($"TotalPlays: {this.TotalPlays}");
         }
-        public void AddToList() { }
 
         public override string ToString()
         {

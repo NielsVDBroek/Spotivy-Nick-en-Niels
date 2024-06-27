@@ -9,7 +9,10 @@ namespace Spotivy_Nick_en_Niels
 {
     public static class Client
     {
+        //Current user ophalen.
         private static User currentUser => Authentication.GetCurrentUser();
+
+        //Invoer afhandelen.
         public static async Task ParseAndExecuteCommand(string input)
         {
             if (input.Equals("show"))
@@ -26,6 +29,7 @@ namespace Spotivy_Nick_en_Niels
             }
             else
             {
+                //Voor de overige commando's wordt de invoer opgesplitst in twee delen. commando(welke actie) en parameter(wat er meegegeven moet worden aan die actie)
                 string[] parts = input.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (parts.Length == 2)
@@ -62,7 +66,24 @@ namespace Spotivy_Nick_en_Niels
                             switch (parameter)
                             {
                                 case "playlist":
-                                    //Remove playlist
+                                    if (currentUser != null)
+                                    {
+                                        Console.WriteLine("Enter the name of the playlist you want to delete:");
+                                        string playlistInput = Console.ReadLine();
+                                        Playlist playlistToDelete = currentUser.Playlists.Find(playlist => playlist.Name == playlistInput);
+                                        if (playlistToDelete != null)
+                                        {
+                                            currentUser.RemovePlaylist(playlistToDelete.Name);
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("User not found.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No user is currently logged in.");
+                                    }
                                     break;
                                 case "friend":
                                     currentUser.RemoveFriend();
@@ -159,6 +180,12 @@ namespace Spotivy_Nick_en_Niels
                                         var songToRemoveFromList = Data.GetSongs().Find(song => song.Name.Equals(playlistSongRemoveInput, StringComparison.OrdinalIgnoreCase));
                                         selectedPlaylist.RemoveSong(songToRemoveFromList);
                                         break;
+                                    case "rename":
+                                        selectedPlaylist.RenameList();
+                                        break;
+                                    default:
+                                        Console.WriteLine($"Unknown command");
+                                        break;
                                 }
                             }
                             else
@@ -178,6 +205,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Help menu voor commando's die de gebruiker uit kan voeren.
         public static void ShowHelp()
         {
             Console.Clear();
@@ -205,8 +233,10 @@ namespace Spotivy_Nick_en_Niels
             Console.WriteLine("within playlist -> Play - plays all the songs in the playlist");
             Console.WriteLine("within playlist -> Add - allows the user to add a song to the playlist");
             Console.WriteLine("within playlist -> Remove - allows the user to remove a song from the playlist");
+            Console.WriteLine("within playlist -> Remove - allows the user to rename the playlist");
         }
 
+        //Alle show opties
         public static string AskShowOption()
         {
             Console.WriteLine("What do you want to show?");
@@ -283,6 +313,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Nummer afspelen op basis van gebruiker invoer.
         public static async Task PlaySongBasedOnName(string input)
         {
             var songToPlay = Data.GetSongs().Find(song => song.Name.Equals(input, StringComparison.OrdinalIgnoreCase));
@@ -305,10 +336,6 @@ namespace Spotivy_Nick_en_Niels
                                 songToPlay.ResumeSong();
                             }
                         }
-                        if (userInput.Key == ConsoleKey.Q)
-                        {
-                            songToPlay.EndSong();
-                        }
                     }
                     await Task.Delay(100);
                 }
@@ -322,6 +349,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Nummer info tonen op basis van gebruiker invoer.
         public static async Task GetSongInfo(string input)
         {
             Song songToGetInfo = Data.GetSongs().Find(song => song.Name.Equals(input, StringComparison.OrdinalIgnoreCase));

@@ -24,6 +24,7 @@ namespace Spotivy_Nick_en_Niels
             return $"{this.Name}";
         }
 
+        //Alle nummers in de lijst afspelen
         public async Task PlayList() 
         {
             if (this.Songs.Count() == 0)
@@ -33,15 +34,30 @@ namespace Spotivy_Nick_en_Niels
             {
                 foreach (Song song in this.Songs)
                 {
-                    song.PlaySong();
+                    var playTask = song.PlaySong();
+
+                    while (!playTask.IsCompleted)
+                    {
+                        if (Console.KeyAvailable)
+                        {
+                            var userInput = Console.ReadKey(intercept: true);
+                            if (userInput.Key == ConsoleKey.Spacebar)
+                            {
+                                song.PauseSong();
+                                userInput = Console.ReadKey(intercept: true);
+                                if (userInput.Key == ConsoleKey.Spacebar)
+                                {
+                                    song.ResumeSong();
+                                }
+                            }
+                        }
+                        await Task.Delay(100);
+                    }
+
+                    await playTask;
+                    await Task.Delay(1500);
                 }
             }
-        }
-        public void SkipSong() { }
-
-        public void ShowSongs() 
-        {
-            
         }
     }
 }

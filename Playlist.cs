@@ -13,6 +13,7 @@ namespace Spotivy_Nick_en_Niels
             owner.Playlists.Add(this);
         }
 
+        //Nummer toevoegen aan de lijst
         public void AddSong(Song songToAdd) 
         {
             if (this.Songs.Contains(songToAdd))
@@ -25,6 +26,7 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        //Nummer verwijderen uit de lijst
         public void RemoveSong(Song songToRemove) 
         {
             if (this.Songs.Contains(songToRemove))
@@ -38,8 +40,10 @@ namespace Spotivy_Nick_en_Niels
             
         }
 
+        //Naam van de lijst veranderen
         public void RenameList() 
         {
+            Console.WriteLine("What do you want to rename this playlist to?");
             String newListName = Console.ReadLine();
             this.Name = newListName;
         }

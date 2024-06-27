@@ -17,11 +17,6 @@ namespace Spotivy_Nick_en_Niels
             this.Password = password;
         }
 
-        public void LogIn()
-        {
-
-        }
-
         public override string ToString()
         {
             return $"{this.Name}";
