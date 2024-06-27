@@ -31,7 +31,7 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine("No songs in this list!");
             } else
             {
-                foreach (Song song in Data.GetSongs())
+                foreach (Song song in this.Songs)
                 {
                     song.PlaySong();
                 }
@@ -41,10 +41,7 @@ namespace Spotivy_Nick_en_Niels
 
         public void ShowSongs() 
         {
-            foreach(Song song in this.Songs)
-            {
-                Console.WriteLine(song);
-            }
+            
         }
     }
 }

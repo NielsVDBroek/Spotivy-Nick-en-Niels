@@ -15,7 +15,14 @@ namespace Spotivy_Nick_en_Niels
 
         public void AddSong(Song songToAdd) 
         {
-            this.Songs.Add(songToAdd);
+            if (this.Songs.Contains(songToAdd))
+            {
+                Console.WriteLine($"{songToAdd} is already in this list.");
+            }
+            else
+            {
+                this.Songs.Add(songToAdd);
+            }
         }
 
         public void RemoveSong(Song songToRemove) 
@@ -23,6 +30,10 @@ namespace Spotivy_Nick_en_Niels
             if (this.Songs.Contains(songToRemove))
             {
                 this.Songs.Remove(songToRemove);
+            }
+            else
+            {
+                Console.WriteLine($"{songToRemove} is not in this list.");
             }
             
         }
