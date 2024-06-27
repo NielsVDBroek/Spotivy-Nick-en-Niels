@@ -9,10 +9,7 @@ internal class Program
     {
         Data.AddStandardData();
         AskUserLogin();
-
-        Console.WriteLine("Data added!");
-        Console.WriteLine(DateTime.Now);
-
+        Console.Clear();
 
         while (Login.GetCurrentUser() != null)
         {

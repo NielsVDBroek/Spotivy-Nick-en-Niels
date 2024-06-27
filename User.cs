@@ -24,7 +24,10 @@ namespace Spotivy_Nick_en_Niels
         {
             new Playlist(playlistName, this);
         }
-        public void RemovePlaylist() { }
+        public void RemovePlaylist() 
+        {
+            
+        }
 
         public void ShowPlaylists()
         {

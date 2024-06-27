@@ -176,6 +176,7 @@ namespace Spotivy_Nick_en_Niels
 
         public static void ShowHelp()
         {
+            Console.Clear();
             Console.WriteLine("Available commands:");
             Console.WriteLine("Logout - Log out");
             Console.WriteLine("Show + Help - Show help menu");
