@@ -14,9 +14,9 @@ internal class Program
         Console.WriteLine(DateTime.Now);
 
 
-        while (true)
+        while (Login.GetCurrentUser() != null)
         {
-            Console.WriteLine("Enter your command (or type 'H' for a list of commands):");
+            Console.WriteLine("Enter your command (or type 'Show' for a list of options to show.):");
             string input = Console.ReadLine().ToLower();
 
             if (!string.IsNullOrEmpty(input))
@@ -26,134 +26,6 @@ internal class Program
             else
             {
                 Console.WriteLine("No command entered.");
-            }
-            if (Console.KeyAvailable)
-            {
-                var userInput = Console.ReadKey(intercept: true);
-                if (userInput.Key == ConsoleKey.A)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        loggedInUser.SendFriendRequest();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.V)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        loggedInUser.AcceptFriendRequest();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.P)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        loggedInUser.ShowPendingFriendRequests();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.D)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        Console.WriteLine("Enter the name of the friend request you want to delete:");
-                        string friendName = Console.ReadLine();
-                        User friend = Data.GetUsers().Find(u => u.Name == friendName);
-                        if (friend != null)
-                        {
-                            loggedInUser.DeleteFriendRequest(friend);
-                        }
-                        else
-                        {
-                            Console.WriteLine("User not found.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.N)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        Console.WriteLine("Enter the name of the friend request you want to deny:");
-                        string friendName = Console.ReadLine();
-                        User friend = Data.GetUsers().Find(u => u.Name == friendName);
-                        if (friend != null)
-                        {
-                            loggedInUser.DenyFriendRequest(friend);
-                        }
-                        else
-                        {
-                            Console.WriteLine("User not found.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.F)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        loggedInUser.ShowFriendsList();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.H)
-                {
-                    Client.ShowHelp();
-                }
-                if (userInput.Key == ConsoleKey.O)
-                {
-                    UserLogout();
-                }
-                if (userInput.Key == ConsoleKey.U)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        Console.WriteLine("Current logged-in user: " + loggedInUser.Name);
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
-                if (userInput.Key == ConsoleKey.R)
-                {
-                    User loggedInUser = Login.GetCurrentUser();
-                    if (loggedInUser != null)
-                    {
-                        loggedInUser.RemoveFriend();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No user is currently logged in.");
-                    }
-                }
             }
             await Task.Delay(100);
         }

@@ -15,6 +15,10 @@ namespace Spotivy_Nick_en_Niels
             {
                 HandleShowOption();
             }
+            if (input.Equals("logout"))
+            {
+                Login.UserLogout();
+            }
             else
             {
                 string[] parts = input.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
@@ -32,13 +36,87 @@ namespace Spotivy_Nick_en_Niels
                         case "info":
                             GetSongInfo(parameter);
                             break;
-                        case "create":
-                            if (parameter.Equals("playlist"))
+                        case "add":
+                            switch (parameter)
                             {
-                                Console.WriteLine("Enter name for your new playlist:");
-                                string playlistName = Console.ReadLine().ToLower();
-                                Login.GetCurrentUser().CreatePlaylist(playlistName);
+                                case "playlist":
+                                    Console.WriteLine("Enter name for your new playlist:");
+                                    string playlistName = Console.ReadLine();
+                                    Login.GetCurrentUser().CreatePlaylist(playlistName);
+                                    break;
+                                case "friend":
+                                    Login.GetCurrentUser().SendFriendRequest();
+                                    break;
+                                default:
+                                    Console.WriteLine($"Unknown command: {parameter}");
+                                    break;
 
+                            }
+                            break;
+                        case "remove":
+                            switch (parameter)
+                            {
+                                case "playlist":
+                                    //Remove playlist
+                                    break;
+                                case "friend":
+                                    Login.GetCurrentUser().RemoveFriend();
+                                    break;
+                                case "request":
+                                    User loggedInUser = Login.GetCurrentUser();
+                                    if (loggedInUser != null)
+                                    {
+                                        Console.WriteLine("Enter the name of the friend request you want to delete:");
+                                        string friendName = Console.ReadLine();
+                                        User friend = Data.GetUsers().Find(u => u.Name == friendName);
+                                        if (friend != null)
+                                        {
+                                            loggedInUser.DeleteFriendRequest(friend);
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("User not found.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No user is currently logged in.");
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine($"Unknown command: {parameter}");
+                                    break;
+
+                            }
+                            break;
+                        case "accept":
+                            if (parameter.Equals("request"))
+                            {
+                                Login.GetCurrentUser().AcceptFriendRequest();
+                            }
+                            break;
+                        case "deny":
+                            if (parameter.Equals("request"))
+                            {
+                                User loggedInUser = Login.GetCurrentUser();
+                                if (loggedInUser != null)
+                                {
+                                    Console.WriteLine("Enter the name of the friend request you want to deny:");
+                                    string friendName = Console.ReadLine();
+                                    User friend = Data.GetUsers().Find(u => u.Name == friendName);
+                                    if (friend != null)
+                                    {
+                                        loggedInUser.DenyFriendRequest(friend);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("User not found.");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No user is currently logged in.");
+                                }
                             }
                             break;
                         default:
@@ -53,10 +131,31 @@ namespace Spotivy_Nick_en_Niels
             }
         }
 
+        public static void ShowHelp()
+        {
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("Show + Help - Show help menu");
+            Console.WriteLine("Spacebar - Pause/Resume the song(if a song is playing)");
+            Console.WriteLine("Add + Friend - Add a friend");
+            Console.WriteLine("Show + Friends - Show friends list");
+            Console.WriteLine("Logout - Log out");
+            Console.WriteLine("Remove + Friend - Remove a friend");
+            Console.WriteLine("Show + User - Show current logged-in user");
+            Console.WriteLine("Accept + Request - Accept friend request");
+            Console.WriteLine("Show + Requests - Show pending friend requests");
+            Console.WriteLine("Remove + Request - Delete/cancel friend request");
+            Console.WriteLine("Deny + Request - Deny incoming friend request");
+            Console.WriteLine("Play + (song to play) - Play a song");
+            Console.WriteLine("info + (song to get info from) - Play a song");
+            Console.WriteLine("Add + Playlist - create a playlist");
+
+            //alll new options
+        }
+
         public static string AskShowOption()
         {
             Console.WriteLine("What do you want to show?");
-            Console.WriteLine("Songs, Users, Playlists, Artists, Albums?");
+            Console.WriteLine("Help, Songs, Users, Playlists, Artists, Friends, Requests, User?");
             string showInput = Console.ReadLine().ToLower();
             return showInput;
         }
@@ -65,6 +164,18 @@ namespace Spotivy_Nick_en_Niels
         {
             switch (AskShowOption())
             {
+                case "help":
+                    ShowHelp();
+                    break;
+                case "friends":
+                        Login.GetCurrentUser().ShowFriendsList();
+                    break;
+                case "user":
+                        Console.WriteLine("Current logged-in user: " + Login.GetCurrentUser().Name);
+                    break;
+                case "requests":
+                        Login.GetCurrentUser().ShowPendingFriendRequests();
+                    break;
                 case "songs":
                     if (Data.GetSongs().Count > 0)
                     {
@@ -116,6 +227,7 @@ namespace Spotivy_Nick_en_Niels
                     break;
             }
         }
+
         public static async Task PlaySongBasedOnName(string input)
         {
             var songToPlay = Data.GetSongs().Find(song => song.Name.Equals(input, StringComparison.OrdinalIgnoreCase));
@@ -168,22 +280,5 @@ namespace Spotivy_Nick_en_Niels
                 Console.WriteLine($"{songToGetInfo} not found.");
             }
         }
-
-        public static void ShowHelp()
-        {
-            Console.WriteLine("Available commands:");
-            Console.WriteLine("H - Show help");
-            Console.WriteLine("Spacebar - Pause/Resume the song(if a song is playing)");
-            Console.WriteLine("A - Add a friend");
-            Console.WriteLine("F - Show friends list");
-            Console.WriteLine("O - Logout");
-            Console.WriteLine("R - Remove a friend");
-            Console.WriteLine("U - Show current logged-in user");
-            Console.WriteLine("V - Accept friend request");
-            Console.WriteLine("P - Show pending friend requests");
-            Console.WriteLine("D - Delete/cancel friend request");
-            Console.WriteLine("N - Deny incoming friend request");
-        }
-
     }
 }
