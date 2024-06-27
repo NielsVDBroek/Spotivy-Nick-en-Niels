@@ -3,9 +3,10 @@
 Werk afspraken:
 
 1. Classes: UpperCamelCase
-2. Methods, variables: UpperCamelCase
-3. End of day commit na een les. mocht je onderdeel klaar zijn dan naar develop. als je nog bezig bent dan commit je naar je local branch.
-4. overleggen over beslissingen.
-5. samen kijken naar merdge conflicten zodat we niet perongelijk dingen weg laten die belangrijk waren.
+2. Methods, fields: UpperCamelCase
+3. Variables: lowerCamelCase
+4. End of day commit na een les. Mocht je feature klaar zijn dan naar develop om klaar te zetten voor review door andere. Als je nog bezig bent dan commit je naar je local branch.
+5. Overleggen over beslissingen. Voornamelijk wie welke features maakt en hoe we die willen realiseren.
+6. Samen kijken naar merdge conflicten zodat we niet perongelijk dingen weg laten die belangrijk waren.
 
 

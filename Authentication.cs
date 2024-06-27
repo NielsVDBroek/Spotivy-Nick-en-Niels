@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Spotivy_Nick_en_Niels
 {
-    internal class Login
+    internal class Authentication
     {
         internal static class Utility
         {
@@ -72,7 +72,7 @@ namespace Spotivy_Nick_en_Niels
                 return hash == m_hashComputer.GetPasswordHashAndSalt(finalString);
             }
         }
-        static Login.PasswordManager pwdManager = new Login.PasswordManager();
+        static Authentication.PasswordManager pwdManager = new Authentication.PasswordManager();
         static User currentUser = null;
 
         public static User GetCurrentUser()

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Spotivy_Nick_en_Niels;
-using static Spotivy_Nick_en_Niels.Login;
+using static Spotivy_Nick_en_Niels.Authentication;
 
 internal class Program
 {
@@ -11,7 +11,7 @@ internal class Program
         AskUserLogin();
         Console.Clear();
 
-        while (Login.GetCurrentUser() != null)
+        while (Authentication.GetCurrentUser() != null)
         {
             Console.WriteLine("Enter your command (or type 'Show' for a list of options to show.):");
             string input = Console.ReadLine().ToLower();

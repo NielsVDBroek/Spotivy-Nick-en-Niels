@@ -9,7 +9,7 @@ namespace Spotivy_Nick_en_Niels
 {
     public static class Client
     {
-        private static User currentUser => Login.GetCurrentUser();
+        private static User currentUser => Authentication.GetCurrentUser();
         public static async Task ParseAndExecuteCommand(string input)
         {
             if (input.Equals("show"))
@@ -18,7 +18,7 @@ namespace Spotivy_Nick_en_Niels
             }
             else if (input.Equals("logout"))
             {
-                Login.UserLogout();
+                Authentication.UserLogout();
             }
             else if (input.Equals("help"))
             {
@@ -184,13 +184,13 @@ namespace Spotivy_Nick_en_Niels
             Console.WriteLine("Available commands:");
             Console.WriteLine("Help - Show help menu");
             Console.WriteLine("Logout - Log out");
-            Console.WriteLine("Show -> Songs - Show all songs");
-            Console.WriteLine("Show -> Users - Show all users");
-            Console.WriteLine("Show -> Playlists - Show users playlists");
-            Console.WriteLine("Show -> Artists - Show all artists");
-            Console.WriteLine("Show -> Friends - Show friends list");
-            Console.WriteLine("Show -> User - Show current logged-in user");
-            Console.WriteLine("Show -> Requests - Show pending friend requests");
+            Console.WriteLine("Within Show -> Songs - Show all songs");
+            Console.WriteLine("Within Show -> Users - Show all users");
+            Console.WriteLine("Within Show -> Playlists - Show users playlists");
+            Console.WriteLine("Within Show -> Artists - Show all artists");
+            Console.WriteLine("Within Show -> Friends - Show friends list");
+            Console.WriteLine("Within Show -> User - Show current logged-in user");
+            Console.WriteLine("Within Show -> Requests - Show pending friend requests");
             Console.WriteLine("While song is playing -> Spacebar - Pause/Resume the song");
             Console.WriteLine("Add + Friend - Add a friend");
             Console.WriteLine("Add + Playlist - create a playlist");

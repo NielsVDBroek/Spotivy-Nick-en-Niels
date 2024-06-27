@@ -15,7 +15,7 @@ namespace Spotivy_Nick_en_Niels
         public User(string name, string password) : base(name, password)
         {
             string salt;
-            this.PasswordHash = new Login.PasswordManager().GeneratePasswordHash(password, out salt);
+            this.PasswordHash = new Authentication.PasswordManager().GeneratePasswordHash(password, out salt);
             this.Salt = salt;
             Data.GetUsers().Add(this);
         }
