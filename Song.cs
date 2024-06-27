@@ -28,8 +28,9 @@ namespace Spotivy_Nick_en_Niels
             this.Date = DateTime.Now;
             this.TotalPlays = 0;
             this.pauseEvent = new ManualResetEventSlim(true);
-
+            //add song to artists list.
             Data.GetSongs().Add(this);
+            //this.Artist.Songs.Add(this);
         }
 
         public void SetAlbum(Album album)

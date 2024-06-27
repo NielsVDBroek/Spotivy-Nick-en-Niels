@@ -9,6 +9,7 @@ namespace Spotivy_Nick_en_Niels
 {
     public static class Client
     {
+        private static User currentUser => Login.GetCurrentUser();
         public static async Task ParseAndExecuteCommand(string input)
         {
             if (input.Equals("show"))
@@ -42,10 +43,10 @@ namespace Spotivy_Nick_en_Niels
                                 case "playlist":
                                     Console.WriteLine("Enter name for your new playlist:");
                                     string playlistName = Console.ReadLine();
-                                    Login.GetCurrentUser().CreatePlaylist(playlistName);
+                                    currentUser.CreatePlaylist(playlistName);
                                     break;
                                 case "friend":
-                                    Login.GetCurrentUser().SendFriendRequest();
+                                    currentUser.SendFriendRequest();
                                     break;
                                 default:
                                     Console.WriteLine($"Unknown command: {parameter}");
@@ -60,18 +61,17 @@ namespace Spotivy_Nick_en_Niels
                                     //Remove playlist
                                     break;
                                 case "friend":
-                                    Login.GetCurrentUser().RemoveFriend();
+                                    currentUser.RemoveFriend();
                                     break;
                                 case "request":
-                                    User loggedInUser = Login.GetCurrentUser();
-                                    if (loggedInUser != null)
+                                    if (currentUser != null)
                                     {
                                         Console.WriteLine("Enter the name of the friend request you want to delete:");
                                         string friendName = Console.ReadLine();
                                         User friend = Data.GetUsers().Find(u => u.Name == friendName);
                                         if (friend != null)
                                         {
-                                            loggedInUser.DeleteFriendRequest(friend);
+                                            currentUser.DeleteFriendRequest(friend);
                                         }
                                         else
                                         {
@@ -92,21 +92,20 @@ namespace Spotivy_Nick_en_Niels
                         case "accept":
                             if (parameter.Equals("request"))
                             {
-                                Login.GetCurrentUser().AcceptFriendRequest();
+                                currentUser.AcceptFriendRequest();
                             }
                             break;
                         case "deny":
                             if (parameter.Equals("request"))
                             {
-                                User loggedInUser = Login.GetCurrentUser();
-                                if (loggedInUser != null)
+                                if (currentUser != null)
                                 {
                                     Console.WriteLine("Enter the name of the friend request you want to deny:");
                                     string friendName = Console.ReadLine();
                                     User friend = Data.GetUsers().Find(u => u.Name == friendName);
                                     if (friend != null)
                                     {
-                                        loggedInUser.DenyFriendRequest(friend);
+                                        currentUser.DenyFriendRequest(friend);
                                     }
                                     else
                                     {
@@ -168,13 +167,13 @@ namespace Spotivy_Nick_en_Niels
                     ShowHelp();
                     break;
                 case "friends":
-                        Login.GetCurrentUser().ShowFriendsList();
+                    currentUser.ShowFriendsList();
                     break;
                 case "user":
-                        Console.WriteLine("Current logged-in user: " + Login.GetCurrentUser().Name);
+                        Console.WriteLine("Current logged-in user: " + currentUser.Name);
                     break;
                 case "requests":
-                        Login.GetCurrentUser().ShowPendingFriendRequests();
+                    currentUser.ShowPendingFriendRequests();
                     break;
                 case "songs":
                     if (Data.GetSongs().Count > 0)
@@ -219,7 +218,7 @@ namespace Spotivy_Nick_en_Niels
                     }
                     break;
                 case "playlists":
-                    Login.GetCurrentUser().ShowPlaylists();
+                    currentUser.ShowPlaylists();
                     break;
                 case "albums":
                     Console.WriteLine("All albums:");
