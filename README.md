@@ -1,5 +1,8 @@
 # Spotivy Nick en Niels
 
+Trello:
+https://trello.com/b/2iBQZg99/oop-spotivy
+
 Werk afspraken:
 
 1. Classes: UpperCamelCase
